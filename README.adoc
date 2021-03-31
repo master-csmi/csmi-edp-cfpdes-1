@@ -1,4 +1,11 @@
 = TP Equation d'Advection Diffusion Reaction
 :stem: latexmath
 
-le sujet est tp.pdf[ici]
+Le sujet est https://feelpp.github.io/csmi-edp-adr/tp.pdf[ici]
+
+Il traite:
+
+- du laplacien 
+- de l'équation d'advection diffusion réaction
+
+Le TP est à effectuer avec la toolbox cfpdes.
