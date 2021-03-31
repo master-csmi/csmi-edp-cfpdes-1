@@ -16,7 +16,7 @@ jobs:
         GITHUB_OAUTH: ${{ secrets.DOCS_GITHUB_KEY }}
     - name: Build
       run: |
-        sudo apt install asciidoctor texlive-latex-recommended
+        sudo apt install asciidoctor texlive-latex-recommended texlive-lang-french
         asciidoctor README.adoc
         pdflatex tp.tex
         mkdir build
