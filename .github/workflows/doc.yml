@@ -16,10 +16,12 @@ jobs:
         GITHUB_OAUTH: ${{ secrets.DOCS_GITHUB_KEY }}
     - name: Build
       run: |
-        sudo apt install asciidoctor
+        sudo apt install asciidoctor texlive-latex-recommended
         asciidoctor README.adoc
+        pdflatex tp.tex
         mkdir build
         mv README.html build/index.html
+        mv tp.pdf build
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@4.1.0
       with:
