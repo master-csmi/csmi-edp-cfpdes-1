@@ -247,7 +247,13 @@ Pour commencer, on considère une condition de Dirichlet homogène $g=0$
 \begin{enumerate}
   \item Tester la formulation variationnelle (directe) avec éléments finis $\mathrm{P} 1$ pour les différentes valeurs de $\varepsilon$. Commenter.
   \item Ajouter les méthodes de stabilisation SUPG et GaLS et comparer les résultats avec la version sans stabilisation.
-  \item Vérifier l'ordre de convergence de la méthode GaLS avec des éléments $\mathrm{P} 1$ et $\mathrm{P} 2$ (pour $\varepsilon=10^{-3}$ ). Pour cela, considérer une solution manufacturée (faite avec les mains): considérer une fonction $u(x, y)$ pjuis calculer $f$ et $g$ telle que $u$ soit solution du problème. Prendre à présent un domaine en forme de $\mathrm{L}: \Omega=] 0,4\left[^{2} \backslash 0,2\left[^{2} .\right.\right.$ Les paramètres sont les suivants : $\varepsilon=\right.$ $10^{-3}, \beta=(y,-x)^{T}, \mu=0$ et $f=0 .$ Sur le bord gauche $\{x=0,2 \leqslant y \leqslant 4\},$ on applique une condition de Dirichlet $u=1 .$ Sur le bord bas $\{2 \leqslant x \leqslant 4, y=0\},$ on applique une condition de Neumann homogène. Sur les autres bords, on applique une condition de Dirichlet homogène.
+  \item Vérifier l'ordre de convergence de la méthode GaLS avec des éléments $\mathrm{P} 1$ et $\mathrm{P} 2$ (pour $\varepsilon=10^{-3}$ ). 
+  Pour cela, considérer une solution manufacturée (faite avec les mains): considérer une fonction $u(x, y)$ puis calculer $f$ et $g$ telle que $u$ soit solution du problème. 
+  Prendre à présent un domaine en forme de $\mathrm{L}: \Omega=] 0,4\left[ \times ] 0,2\left[ .\right.\right.$ 
+  Les paramètres sont les suivants : $\varepsilon=10^{-3}, \beta=(y,-x)^{T}, \mu=0$ et $f=0 .$ 
+  Sur le bord gauche $\{x=0,2 \leqslant y \leqslant 4\},$ on applique une condition de Dirichlet $u=1$. 
+  Sur le bord bas $\{2 \leqslant x \leqslant 4, y=0\},$ on applique une condition de Neumann homogène. 
+  Sur les autres bords, on applique une condition de Dirichlet homogène.
   \item Tester les méthodes d'élément fini avec et sans stabilisation et affiner le maillage suffisamment pour capturer les variations de la solution sur les deux arcs de cercles.  
 \end{enumerate}
 \end{document}
