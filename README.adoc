@@ -8,4 +8,4 @@ Il traite:
 - du laplacien 
 - de l'équation d'advection diffusion réaction
 
-Le TP est à effectuer avec la toolbox cfpdes.
+Le TP est à effectuer avec la toolbox cfpdes : `feelpp_toolbox_coefficientformpdes`
