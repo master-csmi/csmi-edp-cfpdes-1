@@ -19,6 +19,7 @@ jobs:
         sudo apt install asciidoctor texlive-latex-recommended texlive-lang-french texlive-latex-extra
         asciidoctor README.adoc
         pdflatex tp.tex
+        pdflatex tp.tex
         mkdir build
         mv README.html build/index.html
         mv tp.pdf build
