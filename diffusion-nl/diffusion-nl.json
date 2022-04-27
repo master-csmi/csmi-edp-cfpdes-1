@@ -23,7 +23,7 @@
         "cfpdes": {
             "Import": {
                 "filename": "$cfgdir/square.geo",
-                "hsize": 0.02
+                "hsize": 0.08
             }
         }
     },
@@ -32,7 +32,7 @@
     },
     "Materials": {
         "mymat1": {
-            "markers": "Omega",
+            "markers": "Omega"
         }
     },
     "BoundaryConditions": {

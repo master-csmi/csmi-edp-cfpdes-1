@@ -17,7 +17,7 @@
                     "c":"1", // diffusion
                     "a":"1", // reaction
                     //"d":"1"// first time derivative
-                    "f":"1"
+                    "f":"uex:uex"
                 }
             }
         },
@@ -36,6 +36,9 @@
                 }
             }
         }
+    },
+    "Parameters":{
+        "uex":"x:x"
     },
     "Meshes":
     {
@@ -64,7 +67,7 @@
                 "mybc":
                 {
                     "markers":["Left","Bottom","Right","Top"],
-                    "expr":"0"
+                    "expr":"uex:uex"
                 }
             }
         },
@@ -77,6 +80,12 @@
                     "markers":"Left",
                     "expr":"1"
                 }
+            },
+            "Neumann": {
+                "mybc": {
+                    "markers": ["Top","Bottom","Right"],
+                    "expr": "0"
+                }
             }
         }
     },
@@ -87,7 +96,25 @@
             "Exports":
             {
                 "fields":["all"]
+            },
+            "Measures": {
+                "Norm": {
+                    "l2error": {
+                        "type": "L2-error",
+                        "field": "equation1.toto",
+                        "solution": "uex:uex",
+                        "markers": "Omega"
+                    },
+                    "h1error": {
+                        "type": "H1-error",
+                        "field": "equation1.toto",
+                        "solution": "uex:uex",
+                        "grad_solution": "{1,0}:x:y",
+                        "markers": "Omega"
+                    }
+                }
             }
         }
+        
     }
 }
