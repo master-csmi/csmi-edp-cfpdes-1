@@ -5,7 +5,7 @@ on: [push]
 jobs:
 
   build_docs:
-    runs-on: ubuntu-latest
+    runs-on: self-ubuntu-20.04
     name: Build, Install, Package documentation
     if: "!contains(github.event.head_commit.message, 'docs skip')"
     steps:
@@ -16,7 +16,6 @@ jobs:
         GITHUB_OAUTH: ${{ secrets.DOCS_GITHUB_KEY }}
     - name: Build
       run: |
-        sudo apt install asciidoctor texlive-latex-recommended texlive-lang-french texlive-latex-extra
         asciidoctor README.adoc
         pdflatex tp.tex
         pdflatex tp.tex
@@ -29,3 +28,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages # The branch the action should deploy to.
           FOLDER: build # The folder the action should deploy.
+#        sudo apt install asciidoctor texlive-latex-recommended texlive-lang-french texlive-latex-extra
