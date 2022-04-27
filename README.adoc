@@ -1,4 +1,4 @@
-= TP Equation d'Advection Diffusion Reaction
+= TP Etudes d'Équations
 :stem: latexmath
 
 Le sujet est https://feelpp.github.io/csmi-edp-adr/tp.pdf[ici]
@@ -6,6 +6,8 @@ Le sujet est https://feelpp.github.io/csmi-edp-adr/tp.pdf[ici]
 Il traite:
 
 - du laplacien 
+- du laplacien non-linéaire
 - de l'équation d'advection diffusion réaction
+- de l'équation de Stokes
 
 Le TP est à effectuer avec la toolbox cfpdes : `feelpp_toolbox_coefficientformpdes`

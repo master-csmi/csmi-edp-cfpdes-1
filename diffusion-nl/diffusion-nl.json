@@ -1,0 +1,72 @@
+{
+    "Name": "Square2d",
+    "ShortName": "Square2d",
+    "Models": {
+        "cfpdes": {
+            "equations": "equation1"
+        },
+        "equation1": {
+            "setup": {
+                "unknown": {
+                    "basis": "Pch1",
+                    "name": "solution",
+                    "symbol": "u"
+                },
+                "coefficients": {
+                    "c": "(1+equation1_u)^m:m:equation1_u",
+                    "f": "0"
+                }
+            }
+        }
+    },
+    "Meshes": {
+        "cfpdes": {
+            "Import": {
+                "filename": "$cfgdir/square.geo",
+                "hsize": 0.02
+            }
+        }
+    },
+    "Parameters": {
+        "m": 1
+    },
+    "Materials": {
+        "mymat1": {
+            "markers": "Omega",
+        }
+    },
+    "BoundaryConditions": {
+        "equation1": {
+            "Dirichlet": {
+                "Border": {
+                    "markers": [
+                        "Left",
+                        "Right"
+                    ],
+                    "expr": "x:x:y"
+                }
+            }
+        }
+    },
+    "PostProcess": {
+        "cfpdes": {
+            "Exports": {
+                "fields": [
+                    "equation1.solution"
+                ]
+            }
+        },
+        "equation1": {
+            "Measures": {
+                "Norm": {
+                    "myerror": {
+                        "type": "L2-error",
+                        "field": "solution",
+                        "solution": "((2^(m+1)-1)*x+1)^(1./(m+1))-1:m:x:y",
+                        "markers": "Omega"
+                    }
+                }
+            }
+        }
+    }
+}

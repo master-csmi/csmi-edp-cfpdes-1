@@ -1,0 +1,58 @@
+{
+    "Name": "ADR",
+    "ShortName": "adr",
+    "Models": {
+
+        "cfpdes": {
+            "equations": "equation1"
+        },
+        "equation1": {
+            "setup": {
+                "unknown": {
+                    "basis": "Pch1",
+                    "name": "solution",
+                    "symbol": "u"
+                },
+                "coefficients": {
+                    "c": "eps:eps", // diffusion
+                    "beta": "{beta_0,beta_1}:beta_0:beta_1", // advection
+                    "a": "mu:mu", // reaction
+                    "f": "1"
+                }
+            }
+        }
+    },
+    "Parameters": {
+        "eps": 5e-3,
+        "beta_0": 1,
+        "beta_1": 0,
+        "mu": 0
+    },
+    "Materials": {
+        "mymat1": {
+            "markers": "Omega"
+        }
+    },
+    "BoundaryConditions": {
+        "equation1": {
+            "Dirichlet": {
+                "left": {
+                    "markers": [
+                        "Left","Bottom","Top","Right"
+                    ],
+                    "expr": "0"
+                }
+            }
+        }
+    },
+    "PostProcess": {
+        "use-model-name": 1,
+        "cfpdes": {
+            "Exports": {
+                "fields": [
+                    "all"
+                ]
+            }
+        }
+    }
+}

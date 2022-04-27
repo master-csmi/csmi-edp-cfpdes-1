@@ -256,4 +256,40 @@ Pour commencer, on considère une condition de Dirichlet homogène $g=0$
   Sur les autres bords, on applique une condition de Dirichlet homogène.
   \item Tester les méthodes d'élément fini avec et sans stabilisation et affiner le maillage suffisamment pour capturer les variations de la solution sur les deux arcs de cercles.  
 \end{enumerate}
+\section[]{Stokes}
+
+On considère le problème de Stokes suivant:
+
+$$\begin{aligned} -\Delta u+\nabla p &=f \text{ dans } \Omega \\ \nabla \cdot u &=0 \\ u&=g \text{ sur } \partial \Omega \end{aligned}$$
+
+Une solution exacte est donnée par la solution de Kovasznay:
+
+$$u=\left[\begin{array}{c} 1-e^{\lambda x} \cos (2 \pi y) \\ \frac{\lambda}{2 \pi} e^{\lambda x} \sin (2 \pi y) \end{array}\right], \quad p(x, y)=-\frac{e^{2 \lambda x}}{2}+C$$
+
+avec $$\lambda=1 /(2 \nu)-\sqrt{1 /\left(4 \nu^{2}\right)+4 \pi^{2}}, C \in \mathbb{R}$$ une constante et le second membre $f$ est déterminé de telle sorte que $u$ soit solution.
+
+On considère le domaine $\Omega=(-0.5,1) \times(-0.5,1.5)$ et $\nu=0.035 .$ Les conditions de Dirichlet sur le bord sont obtenues en évaluant la solution exacte.
+\begin{itemize}
+  \item Déterminer $f$ de telle sorte que $u$ soit solution puis $C \in \mathbb{R}\) tel que $p$ soit à moyenne nulle sur $\Omega$.
+
+  \item Créer le maillage du domaine $\Omega$.
+  
+  \item Ecrire la formulation variationnelle pour le problème suivant:
+    
+\end{itemize}
+
+
+ $$ \begin{aligned} -\Delta u+\nabla p&=f, \quad \text{dans} \Omega\\ \nabla \cdot u &=0 \\ u &=g \text{ sur } \partial \Omega \end{aligned}$$
+
+  \begin{itemize}
+    \item Résoudre avec les éléments $P_{1} / P_{1}$, Commenter vos résultats.
+
+    \item Résoudre avec les éléments $P_{2} / P_{1}$ et calculer la moyenne de la pression. Commenter.
+  
+    \item Faire une analyse de convergence en vitesse et pression pour les éléments $P_{2} / P_{1}$.
+  
+  \end{itemize}
+  
+Pour calculer la valeur moyenne de la pression, utilisez les outils de postprocessing.
+
 \end{document}
