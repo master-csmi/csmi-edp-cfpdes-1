@@ -118,7 +118,7 @@ coercifs)
 \item Fourier (ou encore appelée Robin)
 \end{itemize}
 satisfont les résultats du théorème 1 page 38 des notes de cours pour des approximations $\mathbb{P}_1$ et
-$\mathbb{P}_3$ ($k=1$ et $k=3$) en 2D.
+$\mathbb{P}_2$ ($k=1$ et $k=2$) en 2D.
 
 Afin de vérifier ces résultats, nous allons d'abord considérer le problème suivant:
 soit $\Omega$ le cercle unité tel que $\partial \Omega = \Gamma_D \cup
@@ -246,7 +246,7 @@ Pour commencer, on considère une condition de Dirichlet homogène $g=0$
 
 \begin{enumerate}
   \item Tester la formulation variationnelle (directe) avec éléments finis $\mathrm{P} 1$ pour les différentes valeurs de $\varepsilon$. Commenter.
-  \item Ajouter les méthodes de stabilisation SUPG et GaLS et comparer les résultats avec la version sans stabilisation.
+  \item Implémenter les méthodes de stabilisation SUPG et GaLS et comparer les résultats avec la version sans stabilisation dans le cas $P_1$  ainsi qu'avec la méthode implémentée via les options \texttt{stabilization.type=gls,supg}
   \item Vérifier l'ordre de convergence de la méthode GaLS avec des éléments $\mathrm{P} 1$ et $\mathrm{P} 2$ (pour $\varepsilon=10^{-3}$ ). 
   Pour cela, considérer une solution manufacturée (faite avec les mains): considérer une fonction $u(x, y)$ puis calculer $f$ et $g$ telle que $u$ soit solution du problème. 
   Prendre à présent un domaine en forme de $\mathrm{L}: \Omega=] 0,4\left[^2 \backslash ] 0,2\left[ ^2.\right.\right.$ 
@@ -288,9 +288,14 @@ On considère le domaine $\Omega=(-0.5,1) \times(-0.5,1.5)$ et $\nu=0.035 .$ Les
     \item Résoudre avec les éléments $P_{2} / P_{1}$ et calculer la moyenne de la pression. Commenter.
   
     \item Faire une analyse de convergence en vitesse et pression pour les éléments $P_{2} / P_{1}$.
-  
+
+
+    \item Implémenter la méthode de Galerkin moindres carrés pour le problème de Stokes discrétisé dans le cas d'espace incompatibles $P_1/P_!$, conduiser l'étude de convergence et montrer que les résultats de convergence sont obtenus.
+
+
   \end{itemize}
   
 Pour calculer la valeur moyenne de la pression, utilisez les outils de postprocessing.
 
+\textbf{Application à Navier-Stokes}: Reproduire les résultats du cas test \url{https://github.com/feelpp/feelpp/blob/develop/toolboxes/coefficientformpdes/cases/fluid/TurekHron/}, expliciter les équations qui sont résolues ainsi que les quantités qui sont calculées en post processing.
 \end{document}
