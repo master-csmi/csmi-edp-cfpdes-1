@@ -1,0 +1,90 @@
+{
+    "Name": "ADR_Manufacturee",
+    "ShortName": "adr_manufacturee",
+    "Models": {
+
+        "cfpdes": {
+            "equations": "equation1"
+        },
+        "equation1": {
+            "setup": {
+                "unknown": {
+                    "basis": "Pch2",
+                    "name": "solution",
+                    "symbol": "u"
+                },
+                "coefficients": {
+                    "c": "eps:eps", // diffusion
+                    "beta": "{beta_0,beta_1}:beta_0:beta_1", // advection
+                    "a": "mu:mu", // reaction
+                    "f": "-4e-3+2*x+2*y+x^2+y^2:x:y"
+                }
+            }
+        }
+    },
+    "Parameters": {
+        "eps": 1e-3,
+        "beta_0": 1,
+        "beta_1": 1,
+        "mu": 1,
+        "g":"x^2+y^2:x:y",
+        "uex":"x^2+y^2:x:y"
+    },
+    "Materials": {
+        "mymat1": {
+            "markers": "Omega"
+        }
+    },
+    "BoundaryConditions": {
+        "equation1": {
+            "Dirichlet": {
+                "left": {
+                    "markers": [
+                        "Left","Bottom","Top","Right"
+                    ],
+                    "expr": "g:g"
+                }
+            }
+        }
+    },
+    "PostProcess": {
+        "use-model-name": 1,
+        "cfpdes": {
+            "Exports": {
+                "fields": [
+                    "all"
+                ]
+            },
+            "Measures": {
+                "Statistics": {
+                    "normtest": {
+                        "type": "integrate",
+                        "expr": "uex:uex",
+                        "markers": "Omega"
+                    }
+                },
+                "Norm": {
+                    "l2error": {
+                        "type": "L2-error",
+                        "field": "equation1.solution",
+                        "solution": "uex:uex",
+                        "markers": "Omega"
+                    },
+                    "h1error": {
+                        "type": "H1-error",
+                        "field": "equation1.solution",
+                        "solution": "uex:uex",
+                        "grad_solution": "{2*x,2*y}:x:y",
+                        "markers": "Omega"
+                    },
+                    "norm-test": {
+                        "type": "H1",
+                        "expr": "uex:uex",
+                        "grad_expr":"{2*x,2*y}:x:y",
+                        "markers": "Omega"
+                    }
+                }
+            }
+        }
+    }
+}

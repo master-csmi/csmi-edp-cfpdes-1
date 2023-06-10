@@ -1,6 +1,6 @@
 {
-    "Name": "ADR",
-    "ShortName": "adr",
+    "Name": "ADR_Manufacturee",
+    "ShortName": "adr_manufacturee",
     "Models": {
 
         "cfpdes": {
@@ -9,7 +9,7 @@
         "equation1": {
             "setup": {
                 "unknown": {
-                    "basis": "Pch1",
+                    "basis": "Pch2",
                     "name": "solution",
                     "symbol": "u"
                 },
@@ -17,16 +17,16 @@
                     "c": "eps:eps", // diffusion
                     "beta": "{beta_0,beta_1}:beta_0:beta_1", // advection
                     "a": "mu:mu", // reaction
-                    "f": "1"
+                    "f": "0"
                 }
             }
         }
     },
     "Parameters": {
         "eps": 1e-3,
-        "beta_0": 1,
-        "beta_1": 1,
-        "mu": 1
+        "beta_0": "y:y",
+        "beta_1": "-x:x",
+        "mu": 0
     },
     "Materials": {
         "mymat1": {
@@ -38,7 +38,21 @@
             "Dirichlet": {
                 "left": {
                     "markers": [
-                        "Left","Bottom","Top","Right"
+                        "Left"
+                    ],
+                    "expr": "1"
+                },
+                "other": {
+                    "markers": [
+                        "Other"
+                    ],
+                    "expr": "0"
+                }
+            },
+            "Neumann":{
+                "bottom": {
+                    "markers": [
+                        "Bottom"
                     ],
                     "expr": "0"
                 }

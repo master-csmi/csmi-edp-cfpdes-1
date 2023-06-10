@@ -1,0 +1,124 @@
+{
+    "Name": "Stokes",
+    "ShortName": "stokes",
+    "Models":
+    {
+        "cfpdes":{
+            "equations":["momentum","mass"]
+        },
+        "momentum":{
+            "setup":{
+                "unknown":{
+                    "basis":"Pchv2",
+                    "name":"velocity",
+                    "symbol":"u"
+                },
+                "coefficients":{
+                    "gamma":"{mass_p-2*materials_mu*momentum_grad_u_00,-materials_mu*(momentum_grad_u_01+momentum_grad_u_10),-materials_mu*(momentum_grad_u_01+momentum_grad_u_10),mass_p-2*materials_mu*momentum_grad_u_11}:materials_mu:mass_p:momentum_grad_u_00:momentum_grad_u_10:momentum_grad_u_01:momentum_grad_u_11"
+                    // "c": "1",
+                    // "f":"{(4*pi^2-lambda^2)*exp(lambda*x)*cos(2*pi*y)-lambda*exp(2*lambda*x),(lambda^3/(2*pi)-2*lambda*pi)*exp(lambda*x)*sin(2*pi*y)}:lambda:x:y"
+                }
+            }
+        },
+        "Parameters":
+        {
+            "nu":"0.035",
+            "lambda":"1/(2*nu)-sqrt(1/(4*nu^2)+4*pi^2)):nu",
+            "C":"(-exp(-lambda)+exp(2*lambda))/(6*lambda):lambda"
+        },
+        "mass":{
+            "setup":{
+                "unknown":{
+                    "basis":"Pch1",
+                    "name":"pressure",
+                    "symbol":"p"
+                },
+                "coefficients":{
+                    //"gamma":"{momentum_u_0,momentum_u_1}:momentum_u_0:momentum_u_1" // div u
+                    "f":"-(momentum_grad_u_00+momentum_grad_u_11):momentum_grad_u_00:momentum_grad_u_11" // div u
+                }
+            }
+        }
+    },
+    "Meshes":
+    {
+        "cfpdes":
+        {
+            "Import":
+            {
+                "filename":"$cfgdir/rectangle.geo",
+                "hsize":0.03
+            }
+        }
+    },
+    "Materials":
+    {
+        "fluid":
+        {
+            "markers":"Omega",
+            //"momentum_c":"1", // diffusion
+            "rho":1,
+            "mu":1
+        }
+    },
+    "BoundaryConditions":
+    {
+        "momentum":
+        {
+            "Dirichlet":
+            {
+                "Bottom":
+                {
+                    "markers":["Bottom"],
+                    "expr":"{1+exp(lambda*x),0}:lambda:x"
+                },
+                "Top": {
+                    "markers": ["Top"],
+                    "expr": "{1+exp(lambda*x),0}:lambda:x"
+                },
+                "Left": {
+                    "markers": ["Left"],
+                    "expr": "{1-exp(-lambda/2)*cos(2*pi*y),lambda/(2*pi)*exp(-lambda/2)*sin(2*pi*y)}:lambda:y"
+                },
+                "Right": {
+                    "markers": ["Right"],
+                    "expr": "{1-exp(lambda)*cos(2*pi*y),lambda/(2*pi)*exp(lambda)*sin(2*pi*y)}:lambda:y"
+                }
+            }
+        }
+    },
+    "PostProcess":
+    {
+        "cfpdes":
+        {
+            "Exports":
+            {
+                "fields":["all"]
+            },
+            "Measures":
+            {
+                "Statistics": {
+                    "integral_p": {
+                        "type": "integrate",
+                        "field": "mass.pressure",
+                        "markers": "Omega"
+                    }
+                },
+                "Norm": {
+                    "l2error-u": {
+                        "type": "L2-error",
+                        "field": "momentum.velocity",
+                        "solution": "{1-exp(lambda*x)*cos(2*pi*y),lambda/(2*pi)*exp(lambda*x)*sin(2*pi*y)}:lambda:x:y",
+                        "markers": "Omega"
+                    },
+                    "l2error-p": {
+                        "type": "L2-error",
+                        "field": "mass.pressure",
+                        "solution": "-exp(2*lambda*x)/2+C:lambda:C:x",
+                        "markers": "Omega"
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,9 @@
+FORMAT:
+type: master_server gold 
+SERVERS
+number of servers: 1 
+#Server 1
+machine id: AsusSacha
+executable: /usr/local/bin/ensight76/bin/ensight7.server
+data_path: /home/sacha/feelppdb/toolboxes/coefficientformpdes/fluid/stokes/np_1
+casefile: Export.case

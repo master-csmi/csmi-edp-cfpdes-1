@@ -1,0 +1,14 @@
+FORMAT:
+type: ensight gold
+GEOMETRY:
+model: Export.geo
+VARIABLES:
+scalar per node: 1 cfpdes.equation1.toto Export.cfpdes.equation1.toto.scl.****
+scalar per element: 1 cfpdes.pid Export.cfpdes.pid.scl.****
+TIME:
+time set:        1
+number of steps: 1
+filename start number: 1
+filename increment: 1
+time values: 0.000000e+00 
+

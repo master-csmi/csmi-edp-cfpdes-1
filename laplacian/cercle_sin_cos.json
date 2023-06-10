@@ -1,0 +1,105 @@
+{
+    "Name": "Cercle",
+    "ShortName": "Cercle",
+    "Models":
+    {
+        "cfpdes":{
+            "equations":"equation1"
+        },
+        "equation1":{
+            "setup":{
+                "unknown":{
+                    "basis":"Pch2",
+                    "name":"toto",
+                    "symbol":"Y"
+                },
+                "coefficients":{
+                    "c":"1", // diffusion
+                    //"d":"1"// first time derivative
+                    "f":"2*pi^2*sin(pi*x)*cos(pi*y):x:y"
+                }
+            }
+        }
+    },
+    "Parameters":{
+        "uex":"sin(pi*x)*cos(pi*y):x:y",
+        "duex":"-y*pi*cos(pi*x)*cos(pi*y)-x*pi*sin(pi*x)*sin(pi*y):x:y",
+        "u_p_du":"sin(pi*x)*cos(pi*y)+((pi*cos(pi*x)*cos(pi*y)*(-y))-(pi*sin(pi*x)*sin(pi*y)*(x))):x:y"
+    },
+    "Meshes":
+    {
+        "cfpdes":
+        {
+            "Import":
+            {
+                "filename":"$cfgdir/cercle.geo",
+                "hsize":0.025
+            }
+        }
+    },
+    "Materials":
+    {
+        "mymat1":
+        {
+            "markers":"Omega"
+        }
+    },
+    "BoundaryConditions":
+    {
+        "equation1":
+        {
+            "Dirichlet":
+            {
+                "mybc":
+                {
+                    "markers":"Dirichlet",
+                    "expr":"uex:uex"
+                }
+            },
+            "Neumann":
+            {
+                "mybc":
+                {
+                    "markers":"Neumann",
+                    "expr":"duex:duex"
+                }
+            },
+            "Fourier":
+            {
+                "mybc":
+                {
+                    "markers":"Robin",
+                    "expr":"u_p_du:u_p_du"
+                }
+            }
+        }
+    },
+    "PostProcess":
+    {
+        "cfpdes":
+        {
+            "Exports":
+            {
+                "fields":["all"]
+            },
+            "Measures": {
+                "Norm": {
+                    "l2error": {
+                        "type": "L2-error",
+                        "field": "equation1.toto",
+                        "solution": "uex:uex",
+                        "markers": "Omega"
+                    },
+                    "h1error": {
+                        "type": "H1-error",
+                        "field": "equation1.toto",
+                        "solution": "uex:uex",
+                        "grad_solution": "{pi*cos(pi*x)*cos(pi*y),-pi*sin(pi*x)*sin(pi*y)}:x:y",
+                        "markers": "Omega"
+                    }
+                }
+            }
+        }
+        
+    }
+}

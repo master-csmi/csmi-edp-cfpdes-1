@@ -1,0 +1,104 @@
+{
+    "Name": "Cercle",
+    "ShortName": "Cercle",
+    "Models":
+    {
+        "cfpdes":{
+            "equations":"equation1"
+        },
+        "equation1":{
+            "setup":{
+                "unknown":{
+                    "basis":"Pch1",
+                    "name":"toto",
+                    "symbol":"Y"
+                },
+                "coefficients":{
+                    "c":"1", // diffusion
+                    //"d":"1"// first time derivative
+                    "f":"1"
+                }
+            }
+        }
+    },
+    "Parameters":{
+        "uex":"x:x"
+    },
+    "Meshes":
+    {
+        "cfpdes":
+        {
+            "Import":
+            {
+                "filename":"$cfgdir/cercle.geo",
+                "hsize":0.05
+            }
+        }
+    },
+    "Materials":
+    {
+        "mymat1":
+        {
+            "markers":"Omega"
+        }
+    },
+    "BoundaryConditions":
+    {
+        "equation1":
+        {
+            "Dirichlet":
+            {
+                "mybc":
+                {
+                    "markers":"Dirichlet",
+                    "expr":0
+                }
+            },
+            "Neumann":
+            {
+                "mybc":
+                {
+                    "markers":"Neumann",
+                    "expr":0
+                }
+            },
+            "Fourier":
+            {
+                "mybc":
+                {
+                    "markers":"Robin",
+                    "expr":0,
+                    "robin_coefficient":1
+                }
+            }
+        }
+    },
+    "PostProcess":
+    {
+        "cfpdes":
+        {
+            "Exports":
+            {
+                "fields":["all"]
+            },
+            "Measures": {
+                "Norm": {
+                    "l2error": {
+                        "type": "L2-error",
+                        "field": "equation1.toto",
+                        "solution": "uex:uex",
+                        "markers": "Omega"
+                    },
+                    "h1error": {
+                        "type": "H1-error",
+                        "field": "equation1.toto",
+                        "solution": "uex:uex",
+                        "grad_solution": "{1,0}:x:y",
+                        "markers": "Omega"
+                    }
+                }
+            }
+        }
+        
+    }
+}
