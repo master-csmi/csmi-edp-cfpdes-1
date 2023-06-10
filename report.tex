@@ -67,70 +67,184 @@ $m = -\pi y * cos(\pi x)cos(\pi y)-\pi x*sin(\pi x) sin(\pi y)$
 
 $l = g+m$
 
+\begin{tikzpicture}
+\begin{axis}[
+    title={Erreur en fonction du pas de maillage},
+    xmode=log,
+    log ticks with fixed point,
+    ymode=log,
+    log ticks with fixed point,
+    xlabel={h},
+    ylabel={Erreur L2},
+    xmin=0.01, xmax=0.5,
+    ymin=0.35, ymax=0.4,
+    xtick={0.025,0.05,0.1,0.2,0.4},
+    ytick={0.36,0.37,0.38,0.39},
+    legend pos=north west,
+    ymajorgrids=true,
+    grid style=dashed,
+]
+
+\addplot[
+    color=blue,
+    mark=square,
+    ]
+    coordinates {
+    (0.4 , 3.7626043526292224e-01)(0.2,3.7560744476157265e-01)(0.1,3.7851697033548642e-01)(0.05,3.8162954415792721e-01)(0.025,3.8324343471680672e-01)
+    };
+    \legend{L2}
+    
+\end{axis}
+\end{tikzpicture}
+
+\begin{tikzpicture}
+\begin{axis}[
+    title={Erreur en fonction du pas de maillage},
+    xmode=log,
+    log ticks with fixed point,
+    ymode=log,
+    log ticks with fixed point,
+    xlabel={h},
+    ylabel={Erreur L2},
+    xmin=0.01, xmax=0.5,
+    ymin=1.59, ymax=1.63,
+    xtick={0.025,0.05,0.1,0.2,0.4},
+    ytick={1.59,1.60,1.61,1.62,1.63},
+    legend pos=north west,
+    ymajorgrids=true,
+    grid style=dashed,
+]
+\addplot[
+    color=red,
+    mark=square,
+    ]
+    coordinates {
+    (0.4,1.5945754308451690e+00)(0.2,1.5990264017217748e+00)(0.1,1.6122403538907137e+00)(0.05,1.6215411772849726e+00)(0.025,1.6263099266864782e+00)
+    };
+    \legend{H1}
+\end{axis}
+\end{tikzpicture}
+
+
 \subsection{Fonctions peu régulières}
+
+2) Calculons $\frac{\partial u}{\partial r}$ et $\frac{\partial u}{\partial \theta}$
+
+$\frac{\partial u}{\partial r} = \frac{2}{3}r^{-\frac{1}{3}}sin(\frac{2}{3} \theta)$
+
+$\frac{\partial u}{\partial \theta} = -\frac{2}{3}r^{\frac{2}{3}}cos(\frac{2}{3} \theta)$
+
+Or:
+
+$\frac{\partial u}{\partial r}^2 \leq \left(\frac{2}{3}\right)^2 sin^2(\frac{2}{3} \theta)$
+
+$\frac{\partial u}{\partial \theta}^2 = \left( -\frac{2}{3} \right) cos^2(\frac{2}{3} \theta)$
+
+Car $r < 1$
+
+De plus, $\Omega$ est bornée, donc $sin^2$ et $cos^2$ sont intégrables à une constante près.
+
+D'où $u \in H^1(\Omega)$
+
+Maintenant, si on a $\theta$ tel que $(\frac{2}{3} \theta) \neq 0$. Alors on a $r^{-\frac{1}{3}} \to 0$ quand $r \to 0$
+
+Donc $\frac{\partial u}{\partial r} \to 0$ quand $r \to 0$. On en déduit que le gradient n'est pas borné à l'origine, et donc $u \in H^2$ puisque $\frac{\partial u}{\partial r}$ n'est pas dérivable en 0.
+
+
+3)
+
+\begin{tikzpicture}
+\begin{axis}[
+    title={Erreur en fonction du pas de maillage},
+    xmode=log,
+    log ticks with fixed point,
+    ymode=log,
+    log ticks with fixed point,
+    xlabel={h},
+    ylabel={Erreur H1},
+    xmin=0.01, xmax=0.5,
+    ymin=0.4, ymax=0.5,
+    xtick={0.025,0.05,0.1,0.2,0.4},
+    ytick={0.4,0.5},
+    legend pos=north west,
+    ymajorgrids=true,
+    grid style=dashed,
+]
+\addplot[
+    color=red,
+    mark=square,
+    ]
+    coordinates {
+    (0.4,4.7279117435887219e-01)(0.2,4.7279117435887219e-01)(0.1,4.7279117435887219e-01)(0.05,4.7279117435887219e-01)(0.025,4.7279117435887219e-01)
+    };
+    \legend{P1}
+\addplot[
+    color=blue,
+    mark=square,
+    ]
+    coordinates {
+    (0.4,4.8390615814071947e-01)(0.2,4.7884006041386845e-01)(0.1,4.7270440620183463e-01)(0.05,4.7270440620183463e-01)(0.025,4.7270440620183463e-01)
+    };
+    \legend{P2}
+\end{axis}
+\end{tikzpicture}
+
+On remarque que l'erreur stagne au bout d'un certain pas de maillage
+
+La toolbox utilisée pour cette section est dans le fichier cercle\_trois\_quart.json
 
 \section{Méthode de stabilisation}
 
 En testant plusieurs valeurs de $\epsilon$ on obtient les résultats suivants:
 
-\begin{figure}
-    \centering
-    \includegraphics[width=0.8\textwidth]{images/eps10.png}
-    \caption{$\epsilon$ = 10}
-\end{figure}
-\begin{figure}
-    \centering
-    \includegraphics[width=0.9\textwidth]{images/esp1.png}
-    \caption{$\epsilon$ = 1}
-\end{figure}
-\begin{figure}
-    \centering
-    \includegraphics[width=0.8\textwidth]{images/eps1e-1.png}
-    \caption{$\epsilon$ = 1e-1}
-\end{figure}  
-\begin{figure}
-    \centering
-    \includegraphics[width=0.9\textwidth]{images/eps1e-3.png}
-    \caption{$\epsilon$ = 1e-3}
-\end{figure}
+\includegraphics[width=0.8\textwidth]{images/eps10.png}
+\begin{center}
+    \textbf{Figure 1: $\epsilon$ = 10}
+\end{center}
+\includegraphics[width=0.9\textwidth]{images/esp1.png}
+\begin{center}
+    \textbf{Figure 2: $\epsilon$ = 1}
+\end{center}
+\includegraphics[width=0.8\textwidth]{images/eps1e-1.png}
+\begin{center}
+    \textbf{Figure 3: $\epsilon$ = 1e-1}
+\end{center}
+\includegraphics[width=0.9\textwidth]{images/eps1e-3.png}
+\begin{center}
+    \textbf{Figure 4: $\epsilon$ = 1e-3}
+\end{center}
 
 On remarque que plus $\epsilon$ est proche de 0, plus la valeur maximale de la solution (Le point le plus jaune) se rapproche d'un coin du carré.
 
 2) Pour $\epsilon = 10$ ou $1e-1$, on ne remarque pas de changements significatifs entre les différentes méthodes.
 
-\begin{figure}
-    \centering
-    \includegraphics[width=0.9\textwidth]{images/eps10.png}
-    \caption{$\epsilon$ = 10 avec SUPG}
-\end{figure}
-\begin{figure}
-    \centering
-    \includegraphics[width=0.8\textwidth]{images/eps10_gals.png}
-    \caption{$\epsilon$ = 10 avec GaLS}
-\end{figure}  
-\begin{figure}
-    \centering
-    \includegraphics[width=0.9\textwidth]{images/eps10_no_stabilization.png}
-    \caption{$\epsilon$ = 10 sans stabilisation}
-\end{figure}
+\includegraphics[width=0.9\textwidth]{images/eps10.png}
+\begin{center}
+    \textbf{Figure 5: $\epsilon$ = 10 avec SUPG}
+\end{center}
+\includegraphics[width=0.8\textwidth]{images/eps10_gals.png}
+\begin{center}
+    \textbf{Figure 6: $\epsilon$ = 10 avec GaLS}
+\end{center}
+\includegraphics[width=0.9\textwidth]{images/eps10_no_stabilization.png}
+\begin{center}
+    \textbf{Figure 7: $\epsilon$ = 10 sans méthode de stabilisation}
+\end{center}
 
 Cependant, si on prend $\epsilon = 1e-3$, on obtient un résultat très différent.
 
-\begin{figure}
-    \centering
-    \includegraphics[width=0.9\textwidth]{images/eps1e-3.png}
-    \caption{$\epsilon$ = 1e-3 avec SUPG}
-\end{figure}
-\begin{figure}
-    \centering
-    \includegraphics[width=0.8\textwidth]{images/eps1e-3_gals.png}
-    \caption{$\epsilon$ = 1e-3 avec GaLS}
-\end{figure}  
-\begin{figure}
-    \centering
-    \includegraphics[width=0.9\textwidth]{images/eps1e-3_no_stabilization.png}
-    \caption{$\epsilon$ = 1e-3 sans stabilisation}
-\end{figure}
+\includegraphics[width=0.9\textwidth]{images/eps1e-3.png}
+\begin{center}
+    \textbf{Figure 8: $\epsilon$ = 1e-3 avec SUPG}
+\end{center}
+\includegraphics[width=0.8\textwidth]{images/eps1e-3_gals.png}
+\begin{center}
+    \textbf{Figure 9: $\epsilon$ = 1e-3 avec GaLS}
+\end{center}
+\includegraphics[width=0.9\textwidth]{images/eps1e-3_no_stabilization.png}
+\begin{center}
+    \textbf{Figure 10: $\epsilon$ = 1e-3 sans méthode de stabilisation}
+\end{center}
 
 3.1) Pour vérifier l'ordre de convergence, nous allons considérer une fonction $u(x,y) = x^2+y^2$
 
@@ -166,7 +280,7 @@ $$||u||_{H^1} \approx 1.81$$
 
 On a donc bien:
 
-$$||u-u_h||_{L^2} \leq h^{K+\frac{1}{2}}||u||_{H^1}$$
+$$||u-u_h||_{L^2} \leq h^{\frac{1}{2}}||u||_{H^1}$$
 
 Avec $h$, le pas du maillage. Ce qui confirme la convergence d'ordre $\frac{1}{2}$ .
 
@@ -175,8 +289,13 @@ La toolbox associée à cette partie est trouvable dans le fichier adr\_manufact
 3.2) Voici la solution du problème après avoir appliqué une méthode de stabilisation GaLS.
 
 \includegraphics[]{images/L_results_P2.png}
+\begin{center}
+    \textbf{Figure 11: Solution approximé de u sur un maillage en forme de L}
+\end{center}
 
 Sur le bord gauche, nous remarquons que la solution est tout le temps égale à 1, comme la condition de Dirichlet que l'on a imposé.
+
+On remarque aussi que sur les autre bords, la solution est nulle (excepté le bord bas), ça correspond à la condition de Dirichlet homogène. Et le bord bas corredpond à la condition de Neumann homogène.
 
 La toolbox utilisée pour générer cette solution est trouvable dans le fichier adr\_L.cfg et adr\_L.json dans le dossier adr. Le maillage utilisé s'appelle L.geo
 
@@ -282,24 +401,27 @@ $\forall v \in H^1_0(\Omega)$ et $\forall q \in L^2_*$
 
 3) En choisissant, une base $\mathbb{P}_1/\mathbb{P}_1$ voici les solutions obtenues:
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[scale=0.75]{images/mass_pressure_P1_P1.png}
-    \caption{Solution approchée de p avec une erreur $L^2$ de: 1.5577586580821336e+06}
-\end{figure}
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[scale=0.75]{images/momentum_velocity_P1_P1.png}
-    \caption{Solution approchée de u avec une erreur $L^2$ de: 7.4786283012603649e-01}
-\end{figure}
+\includegraphics[scale=0.75]{images/mass_pressure_P1_P1.png}
+\begin{center}
+    \textbf{Figure 12: Solution approchée de p avec une erreur $L^2$ de: 1.5577586580821336e+06}
+\end{center}
+\includegraphics[scale=0.75]{images/momentum_velocity_P1_P1.png}
+\begin{center}
+    \textbf{Figure 13: Solution approchée de u avec une erreur $L^2$ de: 7.4786283012603649e-01}
+\end{center}
 
 On remarque que la méthode a du mal à converger vers la solution exacte de p
 
 4) Maintenant en utilisant la méthode $\mathbb{P}_2/\mathbb{P}_1$, on obtient les résultats suivants:
 
 \includegraphics[scale=0.75]{images/momentum_velocity_P2_P1.png}
+\begin{center}
+    \textbf{Figure 14: Solution approchée de u avec une base $\mathbb{P}_2/\mathbb{P}_1$}
+\end{center}
 
 \includegraphics[scale=0.75]{images/mass_pressure_P2_P1.png}
+\begin{center}
+    \textbf{Figure 15: Solution approchée de p avec une base $\mathbb{P}_2/\mathbb{P}_1$}
+\end{center}
 
 \end{document}
